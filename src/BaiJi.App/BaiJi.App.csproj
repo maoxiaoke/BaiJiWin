@@ -20,7 +20,9 @@
     <WindowsPackageType>None</WindowsPackageType>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <SelfContained>true</SelfContained>
-    <EnableMsixTooling>false</EnableMsixTooling>
+    <!-- Must stay true even for an unpackaged app: it drives resources.pri /
+         XBF indexing. With it off, published apps can't locate ms-appx XAML. -->
+    <EnableMsixTooling>true</EnableMsixTooling>
     <DefaultLanguage>en-US</DefaultLanguage>
     <!-- Custom Main so the Velopack startup hook runs before the UI. -->
     <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>

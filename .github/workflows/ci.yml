@@ -69,6 +69,13 @@ jobs:
           Get-ChildItem -Recurse src/BaiJi.App/obj -Include input.json,output.json -ErrorAction SilentlyContinue |
             ForEach-Object { "`n===== $($_.FullName) ====="; Get-Content $_.FullName -Raw }
 
+      - name: List publish output (resources.pri / XBF)
+        shell: pwsh
+        run: |
+          Get-ChildItem artifacts/app -Filter *.pri | Format-Table Name, Length
+          Get-ChildItem artifacts/app -Filter *.xbf -ErrorAction SilentlyContinue | Format-Table Name, Length
+          Write-Host "resources.pri present: $(Test-Path artifacts/app/resources.pri)"
+
       - name: Launch smoke test (app must start without crashing)
         # Catches runtime startup failures the compiler can't — e.g. a XAML
         # resource that doesn't exist in WinUI 3, or an API needing package
