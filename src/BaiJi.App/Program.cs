@@ -13,6 +13,9 @@ public static class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        // Capture any startup crash to %LOCALAPPDATA%\BaiJi\crash.log first.
+        CrashLog.Install();
+
         // Handles Velopack lifecycle events; returns immediately in normal runs.
         UpdateService.RunStartupHook();
 

@@ -11,13 +11,23 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        UnhandledException += (_, e) => CrashLog.Write(e.Exception, "WinUI");
 
-        // Apply the saved language override before any UI is created.
-        var lang = AppServices.Instance.Settings.GetString("appLanguage");
-        if (!string.IsNullOrEmpty(lang))
+        // Apply the saved language override before any UI is created. Guarded:
+        // PrimaryLanguageOverride can be finicky in unpackaged apps and must not
+        // take the whole app down.
+        try
         {
-            ApplicationLanguages.PrimaryLanguageOverride = lang;
-            Loc.UseLanguage(lang);
+            var lang = AppServices.Instance.Settings.GetString("appLanguage");
+            if (!string.IsNullOrEmpty(lang))
+            {
+                ApplicationLanguages.PrimaryLanguageOverride = lang;
+                Loc.UseLanguage(lang);
+            }
+        }
+        catch (Exception ex)
+        {
+            CrashLog.Write(ex, "LanguageInit");
         }
     }
 

@@ -29,7 +29,7 @@ public sealed class AppServices
             else dispatcher.TryEnqueue(() => action());
         };
 
-        Settings = new AppDataSettingsStore();
+        Settings = new FileSettingsStore();
         Tools = new BundledToolLocator();
         Clipboard = new WindowsClipboard();
         License = new LicenseManager(Settings, new LemonSqueezyClient(new HttpClient()));
