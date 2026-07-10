@@ -42,14 +42,23 @@ dotnet publish $app -c Release -r win-x64 -p:Platform=x64 --self-contained true 
     /p:Version=$Version -o $publishDir
 
 # 3. Pack with Velopack (produces installer + delta + RELEASES feed).
+New-Item -ItemType Directory -Force -Path $releasesDir | Out-Null
+# --releaseNotes takes a markdown FILE, not inline text.
+$notesArgs = @()
+if ($Notes) {
+    $notesFile = Join-Path $releasesDir 'release-notes.md'
+    Set-Content -Path $notesFile -Value $Notes -Encoding utf8
+    $notesArgs = @('--releaseNotes', $notesFile)
+}
 vpk pack `
     --packId BaiJiWin `
     --packVersion $Version `
     --packDir $publishDir `
     --mainExe BaiJi.exe `
     --packTitle "BaiJi" `
+    --runtime win-x64 `
     --outputDir $releasesDir `
-    $(if ($Notes) { "--releaseNotes"; $Notes })
+    @notesArgs
 
 Write-Host "`nPackaged $Version into $releasesDir"
 
