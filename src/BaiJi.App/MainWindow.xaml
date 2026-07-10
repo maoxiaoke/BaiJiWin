@@ -9,7 +9,7 @@
 
     <Grid x:Name="RootGrid" AllowDrop="True"
           DragOver="OnDragOver" Drop="OnDrop"
-          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+          Background="{ThemeResource SolidBackgroundFillColorBaseBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
