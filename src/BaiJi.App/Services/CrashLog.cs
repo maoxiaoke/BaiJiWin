@@ -21,7 +21,17 @@ public static class CrashLog
         try
         {
             Directory.CreateDirectory(Path.GetDirectoryName(LogPath)!);
-            File.AppendAllText(LogPath, $"[{source}] {DateTimeOffset.Now:o}\n{ex}\n\n");
+            var sb = new System.Text.StringBuilder();
+            sb.Append('[').Append(source).Append("] ").Append(DateTimeOffset.Now.ToString("o")).Append('\n');
+            for (var e = ex; e is not null; e = e.InnerException)
+            {
+                sb.Append(e.GetType().FullName).Append(": ").Append(e.Message).Append('\n');
+                sb.Append("  HRESULT=0x").Append(e.HResult.ToString("X8")).Append('\n');
+                foreach (System.Collections.DictionaryEntry d in e.Data)
+                    sb.Append("  Data[").Append(d.Key).Append("]=").Append(d.Value).Append('\n');
+            }
+            sb.Append(ex).Append("\n\n");
+            File.AppendAllText(LogPath, sb.ToString());
         }
         catch { /* logging must never throw */ }
     }

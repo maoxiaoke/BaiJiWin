@@ -57,10 +57,10 @@ jobs:
           dotnet test tests/BaiJi.Tests/BaiJi.Tests.csproj -c Release
           --collect:"XPlat Code Coverage" --results-directory TestResults
 
-      - name: Build the WinUI app (win-x64)
-        # WinUI apps must target an explicit platform (x64), never AnyCPU —
-        # without -p:Platform=x64 the XAML compiler crashes.
-        run: dotnet build src/BaiJi.App/BaiJi.App.csproj -c Release -r win-x64 -p:Platform=x64 2>&1 | Tee-Object build.log
+      - name: Publish the WinUI app (win-x64, self-contained)
+        # Publish (not just build) so the smoke test runs the SAME artifact type
+        # Velopack ships — catches publish-only resource/layout differences.
+        run: dotnet publish src/BaiJi.App/BaiJi.App.csproj -c Release -r win-x64 -p:Platform=x64 --self-contained true -o artifacts/app 2>&1 | Tee-Object build.log
 
       - name: Dump XAML compiler IO on failure
         if: failure()
@@ -75,9 +75,8 @@ jobs:
         # identity. Relies on the app's own CrashLog handler.
         shell: pwsh
         run: |
-          $exe = Get-ChildItem -Recurse src/BaiJi.App/bin -Filter BaiJi.exe |
-                 Where-Object { $_.FullName -match 'win-x64' } | Select-Object -First 1
-          if (-not $exe) { throw "BaiJi.exe not found in build output" }
+          $exe = Get-Item artifacts/app/BaiJi.exe -ErrorAction SilentlyContinue
+          if (-not $exe) { throw "BaiJi.exe not found in publish output" }
           $log = "$env:LOCALAPPDATA\BaiJi\crash.log"
           Remove-Item $log -ErrorAction SilentlyContinue
 
