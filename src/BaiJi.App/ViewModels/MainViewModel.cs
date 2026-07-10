@@ -16,7 +16,6 @@ public sealed partial class MainViewModel : ObservableObject
     [ObservableProperty] private bool _isStale;
 
     public event Action? LicenseRequired;
-    public event Action<string>? ToastRequested;
 
     public MainViewModel()
     {
