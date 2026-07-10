@@ -69,6 +69,31 @@ jobs:
           Get-ChildItem -Recurse src/BaiJi.App/obj -Include input.json,output.json -ErrorAction SilentlyContinue |
             ForEach-Object { "`n===== $($_.FullName) ====="; Get-Content $_.FullName -Raw }
 
+      - name: Launch smoke test (app must start without crashing)
+        # Catches runtime startup failures the compiler can't — e.g. a XAML
+        # resource that doesn't exist in WinUI 3, or an API needing package
+        # identity. Relies on the app's own CrashLog handler.
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem -Recurse src/BaiJi.App/bin -Filter BaiJi.exe |
+                 Where-Object { $_.FullName -match 'win-x64' } | Select-Object -First 1
+          if (-not $exe) { throw "BaiJi.exe not found in build output" }
+          $log = "$env:LOCALAPPDATA\BaiJi\crash.log"
+          Remove-Item $log -ErrorAction SilentlyContinue
+
+          Write-Host "Launching $($exe.FullName)"
+          $p = Start-Process -FilePath $exe.FullName -PassThru
+          Start-Sleep -Seconds 12
+
+          if (Test-Path $log) {
+            Write-Host "=== crash.log ==="; Get-Content $log
+            if (-not $p.HasExited) { $p.Kill() }
+            throw "App logged a crash on startup"
+          }
+          if ($p.HasExited) { throw "App exited on startup (exit code $($p.ExitCode))" }
+          $p.Kill()
+          Write-Host "App launched and stayed alive for 12s — OK"
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
