@@ -32,10 +32,12 @@ public static class TestSupport
 
     private static string? RepoRoot()
     {
+        // Anchor on the solution file, not the folder name — the checkout dir is
+        // "BaiJiWins" locally but "BaiJiWin" on GitHub CI.
         var dir = new DirectoryInfo(AppContext.BaseDirectory);
         while (dir is not null)
         {
-            if (dir.Name is "BaiJiWins") return dir.FullName;
+            if (File.Exists(Path.Combine(dir.FullName, "BaiJiWin.sln"))) return dir.FullName;
             dir = dir.Parent;
         }
         return null;

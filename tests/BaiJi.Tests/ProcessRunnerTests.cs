@@ -33,9 +33,12 @@ public class ProcessRunnerTests
     {
         var runner = new ProcessRunner();
         var lines = new List<string>();
-        var result = await runner.RunAsync(Shell, ShellArgs("echo one; echo two"), onStdoutLine: lines.Add);
-        Assert.Contains("one", lines);
-        Assert.Contains("two", lines);
+        // cmd uses "&" as a command separator (no spaces to avoid trailing ones);
+        // POSIX sh uses ";".
+        var script = IsWindows ? "echo one&echo two" : "echo one; echo two";
+        var result = await runner.RunAsync(Shell, ShellArgs(script), onStdoutLine: lines.Add);
+        Assert.Contains(lines, l => l.Trim() == "one");
+        Assert.Contains(lines, l => l.Trim() == "two");
         // Streamed stdout must not also be folded into Output.
         Assert.DoesNotContain("one", result.Output);
     }
