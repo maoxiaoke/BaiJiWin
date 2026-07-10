@@ -58,7 +58,7 @@ jobs:
           --collect:"XPlat Code Coverage" --results-directory TestResults
 
       - name: Build the WinUI app (win-x64)
-        run: dotnet build src/BaiJi.App/BaiJi.App.csproj -c Release -p:Platform=x64 -v detailed 2>&1 | Tee-Object build.log
+        run: dotnet build src/BaiJi.App/BaiJi.App.csproj -c Release -r win-x64 -p:Platform=x64 2>&1 | Tee-Object build.log
 
       - name: Upload build log
         if: always()
