@@ -1,0 +1,14 @@
+<Page
+    x:Class="BaiJi.App.Views.InfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <TextBlock Text="BaiJi" Style="{ThemeResource TitleTextBlockStyle}" HorizontalAlignment="Center" />
+        <TextBlock x:Name="SubtitleText" HorizontalAlignment="Center"
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        <TextBlock x:Name="VersionText" HorizontalAlignment="Center"
+                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+        <TextBlock x:Name="CopyrightText" HorizontalAlignment="Center" FontSize="12"
+                   Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+    </StackPanel>
+</Page>

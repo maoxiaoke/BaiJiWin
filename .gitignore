@@ -1,0 +1,26 @@
+# Build output
+bin/
+obj/
+artifacts/
+TestResults/
+
+# Bundled media tools — fetched by scripts/fetch-binaries.ps1, not committed
+src/BaiJi.App/Tools/
+
+# Velopack / publish
+*.nupkg
+publish/
+
+# Coverage output (coverlet.msbuild writes next to the test project)
+coverage.cobertura.xml
+coverage.json
+coverage.info
+
+# IDE
+.vs/
+*.user
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

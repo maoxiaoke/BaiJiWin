@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- WinUI 3 desktop app, shipped UNPACKAGED so Velopack (not MSIX) owns
+         install + update, matching the macOS DMG + Sparkle model. -->
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>BaiJi.App</RootNamespace>
+    <AssemblyName>BaiJi</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <UseWinUI>true</UseWinUI>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <!-- Unpackaged: no AppX packaging; produce a plain win-x64 folder Velopack
+         wraps into an installer. Self-contained so end users need no runtime. -->
+    <WindowsPackageType>None</WindowsPackageType>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <SelfContained>true</SelfContained>
+    <EnableMsixTooling>false</EnableMsixTooling>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <!-- Custom Main so the Velopack startup hook runs before the UI. -->
+    <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+    <PackageReference Include="Velopack" Version="0.0.1053" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../BaiJi.Core/BaiJi.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Bundled CLI tools fetched by scripts/fetch-binaries.ps1 into Tools\.
+       Copied next to the app so BundledToolLocator resolves them at runtime. -->
+  <ItemGroup>
+    <Content Include="Tools\**\*" CopyToOutputDirectory="PreserveNewest" Condition="Exists('Tools')" />
+  </ItemGroup>
+
+</Project>

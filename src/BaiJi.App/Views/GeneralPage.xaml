@@ -1,0 +1,26 @@
+<Page
+    x:Class="BaiJi.App.Views.GeneralPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel Spacing="20" MaxWidth="480">
+        <StackPanel Spacing="6">
+            <TextBlock x:Name="LanguageLabel" Style="{ThemeResource BodyStrongTextBlockStyle}" />
+            <ComboBox x:Name="LanguageCombo" MinWidth="200" DisplayMemberPath="Name"
+                      SelectionChanged="OnLanguageChanged" />
+        </StackPanel>
+
+        <StackPanel Spacing="6">
+            <TextBlock x:Name="OutputLabel" Style="{ThemeResource BodyStrongTextBlockStyle}" />
+            <ComboBox x:Name="OutputCombo" MinWidth="240" SelectionChanged="OnOutputChanged" />
+            <StackPanel x:Name="CustomRow" Orientation="Horizontal" Spacing="8" Visibility="Collapsed">
+                <TextBox x:Name="CustomPath" Width="260" IsReadOnly="True" />
+                <Button x:Name="ChooseButton" Click="OnChooseFolder" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Spacing="12">
+            <ToggleSwitch x:Name="CopyToggle" Toggled="OnCopyToggled" />
+            <TextBlock x:Name="CopyLabel" VerticalAlignment="Center" />
+        </StackPanel>
+    </StackPanel>
+</Page>

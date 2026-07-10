@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>BaiJi</value>
+  </data>
+  <data name="AppSubtitle" xml:space="preserve">
+    <value>离线媒体转换与压缩工具</value>
+  </data>
+  <data name="Slot_Title" xml:space="preserve">
+    <value>把图片或视频丢进来</value>
+  </data>
+  <data name="Slot_Subtitle" xml:space="preserve">
+    <value>点击选择 · 或 Ctrl+V 粘贴</value>
+  </data>
+  <data name="Card_Copy" xml:space="preserve">
+    <value>复制 Ctrl+C</value>
+  </data>
+  <data name="Card_Compare" xml:space="preserve">
+    <value>对比</value>
+  </data>
+  <data name="Card_CompareOriginal" xml:space="preserve">
+    <value>原图</value>
+  </data>
+  <data name="Card_CompareOutput" xml:space="preserve">
+    <value>压缩后</value>
+  </data>
+  <data name="Card_OutputMissing" xml:space="preserve">
+    <value>文件已移动或删除</value>
+  </data>
+  <data name="Card_ReprocessHelp" xml:space="preserve">
+    <value>用当前设置重新压缩</value>
+  </data>
+  <data name="Card_ReprocessStale" xml:space="preserve">
+    <value>用新设置重压</value>
+  </data>
+  <data name="Card_RetryFailed" xml:space="preserve">
+    <value>重试 {0} 个失败</value>
+  </data>
+  <data name="Card_SaveFailed" xml:space="preserve">
+    <value>存储失败</value>
+  </data>
+  <data name="Card_SavePrompt" xml:space="preserve">
+    <value>存到这里</value>
+  </data>
+  <data name="Card_SaveTo" xml:space="preserve">
+    <value>存储到…</value>
+  </data>
+  <data name="Card_Saved" xml:space="preserve">
+    <value>已存储</value>
+  </data>
+  <data name="Card_TargetMissed" xml:space="preserve">
+    <value>仍超过 {0}</value>
+  </data>
+  <data name="Queue_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Queue_FailureDetail" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="Queue_Remove" xml:space="preserve">
+    <value>移除</value>
+  </data>
+  <data name="Queue_Retry" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="Queue_RevealInExplorer" xml:space="preserve">
+    <value>在资源管理器中显示输出</value>
+  </data>
+  <data name="Queue_StatusUnsupported" xml:space="preserve">
+    <value>不支持的格式</value>
+  </data>
+  <data name="Params_Quality" xml:space="preserve">
+    <value>质量</value>
+  </data>
+  <data name="Params_ImageFormat" xml:space="preserve">
+    <value>图片格式</value>
+  </data>
+  <data name="Params_FormatKeep" xml:space="preserve">
+    <value>保持原格式</value>
+  </data>
+  <data name="Params_RemoveAudioShort" xml:space="preserve">
+    <value>移除音频</value>
+  </data>
+  <data name="Params_RemoveAudioVideos" xml:space="preserve">
+    <value>视频移除音频</value>
+  </data>
+  <data name="Params_RestoreDefaults" xml:space="preserve">
+    <value>恢复默认</value>
+  </data>
+  <data name="Preset_Smaller" xml:space="preserve">
+    <value>更小</value>
+  </data>
+  <data name="Preset_Balanced" xml:space="preserve">
+    <value>平衡</value>
+  </data>
+  <data name="Preset_Clearer" xml:space="preserve">
+    <value>更清晰</value>
+  </data>
+  <data name="Target_MenuTitle" xml:space="preserve">
+    <value>限制大小</value>
+  </data>
+  <data name="Target_None" xml:space="preserve">
+    <value>不限制</value>
+  </data>
+  <data name="Target_5MB" xml:space="preserve">
+    <value>≤ 5 MB</value>
+  </data>
+  <data name="Target_Email" xml:space="preserve">
+    <value>≤ 10 MB · 邮件</value>
+  </data>
+  <data name="Target_WeChat" xml:space="preserve">
+    <value>≤ 25 MB · 微信</value>
+  </data>
+  <data name="Toast_CompressedAndCopied" xml:space="preserve">
+    <value>已压缩并复制,可直接粘贴</value>
+  </data>
+  <data name="Toast_Copied" xml:space="preserve">
+    <value>已复制到剪贴板</value>
+  </data>
+  <data name="Gear_Destination" xml:space="preserve">
+    <value>结果保存方式</value>
+  </data>
+  <data name="Gear_DestinationCustom" xml:space="preserve">
+    <value>自定义文件夹…</value>
+  </data>
+  <data name="Gear_DestinationSameAsInput" xml:space="preserve">
+    <value>存到原文件目录</value>
+  </data>
+  <data name="Gear_DestinationStaging" xml:space="preserve">
+    <value>暂存(拖走即用,自动清理)</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>通用</value>
+  </data>
+  <data name="Settings_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Settings_Updates" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="Settings_Info" xml:space="preserve">
+    <value>说明</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="Settings_OutputDirectory" xml:space="preserve">
+    <value>输出文件夹</value>
+  </data>
+  <data name="Settings_CopyToClipboard" xml:space="preserve">
+    <value>压缩后复制到剪贴板</value>
+  </data>
+  <data name="Settings_Choose" xml:space="preserve">
+    <value>选择</value>
+  </data>
+  <data name="License_Activate" xml:space="preserve">
+    <value>激活</value>
+  </data>
+  <data name="License_Activating" xml:space="preserve">
+    <value>激活中</value>
+  </data>
+  <data name="License_ActivatedStatus" xml:space="preserve">
+    <value>激活状态</value>
+  </data>
+  <data name="License_Key" xml:space="preserve">
+    <value>License Key</value>
+  </data>
+  <data name="License_EnterKey" xml:space="preserve">
+    <value>输入 License Key</value>
+  </data>
+  <data name="License_Get" xml:space="preserve">
+    <value>获取 License Key</value>
+  </data>
+  <data name="License_Manage" xml:space="preserve">
+    <value>管理 License</value>
+  </data>
+  <data name="License_Deactivate" xml:space="preserve">
+    <value>停用 License</value>
+  </data>
+  <data name="License_DeactivateConfirm" xml:space="preserve">
+    <value>确定停用 License 吗？这会清除所有激活信息。</value>
+  </data>
+  <data name="License_ActivatedOk" xml:space="preserve">
+    <value>License 激活成功！</value>
+  </data>
+  <data name="License_ExpiryDate" xml:space="preserve">
+    <value>过期时间</value>
+  </data>
+  <data name="License_RequiredTitle" xml:space="preserve">
+    <value>需要激活 License</value>
+  </data>
+  <data name="License_RequiredMessage" xml:space="preserve">
+    <value>激活 License 后即可处理文件。</value>
+  </data>
+  <data name="Updates_Check" xml:space="preserve">
+    <value>检查新版本</value>
+  </data>
+  <data name="Updates_Auto" xml:space="preserve">
+    <value>自动检查升级</value>
+  </data>
+  <data name="Updates_CurrentVersion" xml:space="preserve">
+    <value>当前版本</value>
+  </data>
+  <data name="Updates_UpToDate" xml:space="preserve">
+    <value>已是最新版本。</value>
+  </data>
+  <data name="Updates_Available" xml:space="preserve">
+    <value>有可用的新版本。</value>
+  </data>
+  <data name="Updates_Downloading" xml:space="preserve">
+    <value>正在下载更新…</value>
+  </data>
+  <data name="Updates_Restart" xml:space="preserve">
+    <value>重启以更新</value>
+  </data>
+  <data name="Info_Version" xml:space="preserve">
+    <value>版本 {0}</value>
+  </data>
+  <data name="Info_Copyright" xml:space="preserve">
+    <value>Copyright © 2024 nazha</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="Common_Custom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="Error_CompressionFailed" xml:space="preserve">
+    <value>压缩失败。</value>
+  </data>
+  <data name="Error_CompressionToolMissing" xml:space="preserve">
+    <value>应用内置的压缩工具缺失。</value>
+  </data>
+  <data name="Error_VideoConversionFailed" xml:space="preserve">
+    <value>转换失败 (代码 {0})。</value>
+  </data>
+</root>

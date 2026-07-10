@@ -1,0 +1,90 @@
+<Window
+    x:Class="BaiJi.App.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+
+    <Grid x:Name="RootGrid" AllowDrop="True"
+          DragOver="OnDragOver" Drop="OnDrop"
+          Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Title bar strip with a settings (gear) button -->
+        <Grid x:Name="AppTitleBar" Height="40" Row="0" Padding="12,0">
+            <TextBlock x:Name="TitleText" Text="BaiJi" VerticalAlignment="Center"
+                       FontWeight="SemiBold" />
+            <Button x:Name="SettingsButton" HorizontalAlignment="Right" VerticalAlignment="Center"
+                    Click="OnOpenSettings" Background="Transparent" BorderThickness="0"
+                    ToolTipService.ToolTip="Settings">
+                <FontIcon Glyph="&#xE713;" FontSize="16" />
+            </Button>
+        </Grid>
+
+        <!-- Stage: drop slot OR the result card -->
+        <Grid Row="1" Padding="16,4">
+            <!-- Empty stage -->
+            <StackPanel x:Name="DropSlot" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Spacing="8" Tapped="OnChooseFiles">
+                <FontIcon Glyph="&#xE898;" FontSize="40" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock x:Name="SlotTitle" HorizontalAlignment="Center"
+                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock x:Name="SlotSubtitle" HorizontalAlignment="Center" FontSize="12"
+                           Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+            </StackPanel>
+
+            <!-- Result card -->
+            <Border x:Name="Card" Visibility="Collapsed"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1" CornerRadius="10" Padding="16">
+                <StackPanel Spacing="10" VerticalAlignment="Center">
+                    <controls:ProgressRing x:Name="CardProgress" Width="48" Height="48"
+                                           HorizontalAlignment="Center" IsActive="False" Visibility="Collapsed" />
+                    <TextBlock x:Name="CardHeadline" HorizontalAlignment="Center"
+                               FontSize="20" FontWeight="SemiBold" />
+                    <TextBlock x:Name="CardDetail" HorizontalAlignment="Center" FontSize="12"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               TextWrapping="Wrap" TextAlignment="Center" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="8" Margin="0,4,0,0">
+                        <Button x:Name="CopyButton" Click="OnCopy" Visibility="Collapsed">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <FontIcon Glyph="&#xE8C8;" FontSize="14" />
+                                <TextBlock x:Name="CopyLabel" />
+                            </StackPanel>
+                        </Button>
+                        <Button x:Name="SaveButton" Click="OnSaveTo" Visibility="Collapsed" />
+                        <Button x:Name="ReprocessButton" Click="OnReprocess" Visibility="Collapsed" />
+                        <Button x:Name="RemoveButton" Click="OnRemove">
+                            <FontIcon Glyph="&#xE711;" FontSize="14" />
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Quick-settings bar -->
+        <Grid Row="2" Padding="12,8" ColumnSpacing="8" Background="{ThemeResource LayerFillColorDefaultBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ComboBox x:Name="QualityCombo" Grid.Column="0" HorizontalAlignment="Stretch"
+                      SelectionChanged="OnQuickChanged" />
+            <ComboBox x:Name="TargetCombo" Grid.Column="1" HorizontalAlignment="Stretch"
+                      SelectionChanged="OnQuickChanged" />
+            <ComboBox x:Name="FormatCombo" Grid.Column="2" HorizontalAlignment="Stretch"
+                      SelectionChanged="OnQuickChanged" />
+        </Grid>
+
+        <!-- Toast -->
+        <InfoBar x:Name="Toast" Grid.RowSpan="3" IsOpen="False" IsClosable="True"
+                 VerticalAlignment="Bottom" Margin="12,0,12,56" Severity="Success" />
+    </Grid>

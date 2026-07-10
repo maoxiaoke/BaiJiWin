@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppTitle" xml:space="preserve">
+    <value>BaiJi</value>
+  </data>
+  <data name="AppSubtitle" xml:space="preserve">
+    <value>Offline media converter and compressor</value>
+  </data>
+  <data name="Slot_Title" xml:space="preserve">
+    <value>Drop images or videos here</value>
+  </data>
+  <data name="Slot_Subtitle" xml:space="preserve">
+    <value>Click to choose · or Ctrl+V to paste</value>
+  </data>
+  <data name="Card_Copy" xml:space="preserve">
+    <value>Copy  Ctrl+C</value>
+  </data>
+  <data name="Card_Compare" xml:space="preserve">
+    <value>Compare</value>
+  </data>
+  <data name="Card_CompareOriginal" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="Card_CompareOutput" xml:space="preserve">
+    <value>Compressed</value>
+  </data>
+  <data name="Card_OutputMissing" xml:space="preserve">
+    <value>File moved or deleted</value>
+  </data>
+  <data name="Card_ReprocessHelp" xml:space="preserve">
+    <value>Recompress with current settings</value>
+  </data>
+  <data name="Card_ReprocessStale" xml:space="preserve">
+    <value>Recompress with new settings</value>
+  </data>
+  <data name="Card_RetryFailed" xml:space="preserve">
+    <value>Retry {0} failed</value>
+  </data>
+  <data name="Card_SaveFailed" xml:space="preserve">
+    <value>Save failed</value>
+  </data>
+  <data name="Card_SavePrompt" xml:space="preserve">
+    <value>Save here</value>
+  </data>
+  <data name="Card_SaveTo" xml:space="preserve">
+    <value>Save to…</value>
+  </data>
+  <data name="Card_Saved" xml:space="preserve">
+    <value>Saved</value>
+  </data>
+  <data name="Card_TargetMissed" xml:space="preserve">
+    <value>Still over {0}</value>
+  </data>
+  <data name="Queue_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Queue_FailureDetail" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Queue_Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Queue_Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Queue_RevealInExplorer" xml:space="preserve">
+    <value>Show output in Explorer</value>
+  </data>
+  <data name="Queue_StatusUnsupported" xml:space="preserve">
+    <value>Unsupported format</value>
+  </data>
+  <data name="Params_Quality" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="Params_ImageFormat" xml:space="preserve">
+    <value>Image format</value>
+  </data>
+  <data name="Params_FormatKeep" xml:space="preserve">
+    <value>Keep original format</value>
+  </data>
+  <data name="Params_RemoveAudioShort" xml:space="preserve">
+    <value>Remove audio</value>
+  </data>
+  <data name="Params_RemoveAudioVideos" xml:space="preserve">
+    <value>Remove audio from videos</value>
+  </data>
+  <data name="Params_RestoreDefaults" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="Preset_Smaller" xml:space="preserve">
+    <value>Smaller</value>
+  </data>
+  <data name="Preset_Balanced" xml:space="preserve">
+    <value>Balanced</value>
+  </data>
+  <data name="Preset_Clearer" xml:space="preserve">
+    <value>Clearer</value>
+  </data>
+  <data name="Target_MenuTitle" xml:space="preserve">
+    <value>Limit size</value>
+  </data>
+  <data name="Target_None" xml:space="preserve">
+    <value>No limit</value>
+  </data>
+  <data name="Target_5MB" xml:space="preserve">
+    <value>≤ 5 MB</value>
+  </data>
+  <data name="Target_Email" xml:space="preserve">
+    <value>≤ 10 MB · Email</value>
+  </data>
+  <data name="Target_WeChat" xml:space="preserve">
+    <value>≤ 25 MB · WeChat</value>
+  </data>
+  <data name="Toast_CompressedAndCopied" xml:space="preserve">
+    <value>Compressed and copied — ready to paste</value>
+  </data>
+  <data name="Toast_Copied" xml:space="preserve">
+    <value>Copied to clipboard</value>
+  </data>
+  <data name="Gear_Destination" xml:space="preserve">
+    <value>Output destination</value>
+  </data>
+  <data name="Gear_DestinationCustom" xml:space="preserve">
+    <value>Custom folder…</value>
+  </data>
+  <data name="Gear_DestinationSameAsInput" xml:space="preserve">
+    <value>Next to the original</value>
+  </data>
+  <data name="Gear_DestinationStaging" xml:space="preserve">
+    <value>Staging (drag away; auto-cleaned)</value>
+  </data>
+  <data name="Settings_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_License" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="Settings_Updates" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="Settings_Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Settings_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_OutputDirectory" xml:space="preserve">
+    <value>Output directory</value>
+  </data>
+  <data name="Settings_CopyToClipboard" xml:space="preserve">
+    <value>Copy to clipboard after compression</value>
+  </data>
+  <data name="Settings_Choose" xml:space="preserve">
+    <value>Choose…</value>
+  </data>
+  <data name="License_Activate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="License_Activating" xml:space="preserve">
+    <value>Activating…</value>
+  </data>
+  <data name="License_ActivatedStatus" xml:space="preserve">
+    <value>Activation status</value>
+  </data>
+  <data name="License_Key" xml:space="preserve">
+    <value>License key</value>
+  </data>
+  <data name="License_EnterKey" xml:space="preserve">
+    <value>Enter your license key</value>
+  </data>
+  <data name="License_Get" xml:space="preserve">
+    <value>Get license key</value>
+  </data>
+  <data name="License_Manage" xml:space="preserve">
+    <value>Manage license</value>
+  </data>
+  <data name="License_Deactivate" xml:space="preserve">
+    <value>Deactivate license</value>
+  </data>
+  <data name="License_DeactivateConfirm" xml:space="preserve">
+    <value>Are you sure you want to deactivate your license? This will remove all activation information.</value>
+  </data>
+  <data name="License_ActivatedOk" xml:space="preserve">
+    <value>License activated successfully!</value>
+  </data>
+  <data name="License_ExpiryDate" xml:space="preserve">
+    <value>Expiry date</value>
+  </data>
+  <data name="License_RequiredTitle" xml:space="preserve">
+    <value>License required</value>
+  </data>
+  <data name="License_RequiredMessage" xml:space="preserve">
+    <value>Activate a license to process files.</value>
+  </data>
+  <data name="Updates_Check" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="Updates_Auto" xml:space="preserve">
+    <value>Automatically check for updates</value>
+  </data>
+  <data name="Updates_CurrentVersion" xml:space="preserve">
+    <value>Current version:</value>
+  </data>
+  <data name="Updates_UpToDate" xml:space="preserve">
+    <value>You're up to date.</value>
+  </data>
+  <data name="Updates_Available" xml:space="preserve">
+    <value>A new version is available.</value>
+  </data>
+  <data name="Updates_Downloading" xml:space="preserve">
+    <value>Downloading update…</value>
+  </data>
+  <data name="Updates_Restart" xml:space="preserve">
+    <value>Restart to update</value>
+  </data>
+  <data name="Info_Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Info_Copyright" xml:space="preserve">
+    <value>Copyright © 2024 nazha</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Common_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Common_Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Error_CompressionFailed" xml:space="preserve">
+    <value>Compression failed.</value>
+  </data>
+  <data name="Error_CompressionToolMissing" xml:space="preserve">
+    <value>The bundled compression tool is missing.</value>
+  </data>
+  <data name="Error_VideoConversionFailed" xml:space="preserve">
+    <value>Conversion failed (code {0}).</value>
+  </data>
+</root>

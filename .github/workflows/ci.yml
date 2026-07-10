@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  # Fast feedback: Core logic unit tests + a coverage gate. Runs on Linux; the
+  # integration/e2e tests self-skip here (no bundled tools present).
+  core-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Test BaiJi.Core with coverage gate (>85% line)
+        run: >
+          dotnet test tests/BaiJi.Tests/BaiJi.Tests.csproj -c Release
+          /p:CollectCoverage=true
+          /p:CoverletOutputFormat=cobertura
+          /p:Include="[BaiJi.Core]*"
+          /p:Threshold=85
+          /p:ThresholdType=line
+          /p:ThresholdStat=total
+
+  # Full verification: build the WinUI app AND run the real integration/e2e tests
+  # against the fetched win-x64 binaries — the pieces that can't run on macOS.
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Cache bundled media tools
+        id: tools-cache
+        uses: actions/cache@v4
+        with:
+          path: src/BaiJi.App/Tools
+          key: tools-${{ hashFiles('scripts/fetch-binaries.ps1') }}
+
+      - name: Fetch ffmpeg / magick / pngquant (win-x64)
+        if: steps.tools-cache.outputs.cache-hit != 'true'
+        run: pwsh -File scripts/fetch-binaries.ps1
+
+      - name: Test suite (unit + integration + e2e, real binaries)
+        env:
+          BAIJI_TOOLS_DIR: ${{ github.workspace }}\src\BaiJi.App\Tools
+        run: >
+          dotnet test tests/BaiJi.Tests/BaiJi.Tests.csproj -c Release
+          --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: Build the WinUI app (win-x64)
+        run: dotnet build src/BaiJi.App/BaiJi.App.csproj -c Release -r win-x64
+
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: TestResults/**/coverage.cobertura.xml

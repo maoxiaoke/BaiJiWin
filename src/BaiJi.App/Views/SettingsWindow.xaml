@@ -1,0 +1,27 @@
+<Window
+    x:Class="BaiJi.App.Views.SettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
+
+    <Grid>
+        <NavigationView x:Name="Nav" IsBackButtonVisible="Collapsed" IsSettingsVisible="False"
+                        PaneDisplayMode="Left" OpenPaneLength="180"
+                        SelectionChanged="OnSelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="GeneralItem" Tag="general">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE713;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="LicenseItem" Tag="license">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE192;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="UpdatesItem" Tag="updates">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE895;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+                <NavigationViewItem x:Name="InfoItem" Tag="info">
+                    <NavigationViewItem.Icon><FontIcon Glyph="&#xE946;" /></NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame" Padding="24" />
+        </NavigationView>
+    </Grid>

@@ -1,0 +1,62 @@
+name: Release
+
+# Tag a version (v1.2.3) or run manually to publish a Velopack release to the
+# repo's GitHub Releases — which is exactly what the in-app updater reads.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release, e.g. 1.0.0'
+        required: true
+
+permissions:
+  contents: write   # vpk upload github needs to create the release
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Resolve version
+        id: ver
+        shell: pwsh
+        run: |
+          $v = if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            '${{ github.event.inputs.version }}'
+          } else {
+            '${{ github.ref_name }}'.TrimStart('v')
+          }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Cache bundled media tools
+        uses: actions/cache@v4
+        with:
+          path: src/BaiJi.App/Tools
+          key: tools-${{ hashFiles('scripts/fetch-binaries.ps1') }}
+
+      - name: Fetch media tools
+        run: pwsh -File scripts/fetch-binaries.ps1
+
+      - name: Install Velopack CLI
+        run: dotnet tool install -g vpk
+
+      - name: Publish + pack + upload (Velopack -> GitHub Releases)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          pwsh -File scripts/release.ps1
+          -Version ${{ steps.ver.outputs.version }}
+          -Notes "Release ${{ steps.ver.outputs.version }}"
+          -Upload -Token $env:GITHUB_TOKEN
+
+      - name: Upload installer artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: baiji-win-${{ steps.ver.outputs.version }}
+          path: artifacts/releases/**
