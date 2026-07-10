@@ -57,13 +57,10 @@ jobs:
           dotnet test tests/BaiJi.Tests/BaiJi.Tests.csproj -c Release
           --collect:"XPlat Code Coverage" --results-directory TestResults
 
-      - name: Set up MSBuild
-        uses: microsoft/setup-msbuild@v2
-
       - name: Build the WinUI app (win-x64)
-        # WinUI 3's XAML compiler is reliably driven by full MSBuild; `dotnet
-        # build` crashes XamlCompiler silently on the runner.
-        run: msbuild src/BaiJi.App/BaiJi.App.csproj -t:restore,build -p:Configuration=Release -p:Platform=x64 -p:RuntimeIdentifier=win-x64 2>&1 | Tee-Object build.log
+        # WinUI apps must target an explicit platform (x64), never AnyCPU —
+        # without -p:Platform=x64 the XAML compiler crashes.
+        run: dotnet build src/BaiJi.App/BaiJi.App.csproj -c Release -r win-x64 -p:Platform=x64 2>&1 | Tee-Object build.log
 
       - name: Dump XAML compiler IO on failure
         if: failure()

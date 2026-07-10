@@ -1,5 +1,6 @@
 using BaiJi.App.Services;
 using BaiJi.App.ViewModels;
+using BaiJi.App.Views;
 using BaiJi.Core;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
