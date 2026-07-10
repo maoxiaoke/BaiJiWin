@@ -60,6 +60,13 @@ jobs:
       - name: Build the WinUI app (win-x64)
         run: dotnet build src/BaiJi.App/BaiJi.App.csproj -c Release -r win-x64 -p:Platform=x64 2>&1 | Tee-Object build.log
 
+      - name: Dump XAML compiler IO on failure
+        if: failure()
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse src/BaiJi.App/obj -Include input.json,output.json -ErrorAction SilentlyContinue |
+            ForEach-Object { "`n===== $($_.FullName) ====="; Get-Content $_.FullName -Raw }
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
