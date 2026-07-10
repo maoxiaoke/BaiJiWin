@@ -41,6 +41,8 @@ jobs:
           key: tools-${{ hashFiles('scripts/fetch-binaries.ps1') }}
 
       - name: Fetch media tools
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pwsh -File scripts/fetch-binaries.ps1
 
       - name: Install Velopack CLI

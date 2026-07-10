@@ -46,6 +46,8 @@ jobs:
 
       - name: Fetch ffmpeg / magick / pngquant (win-x64)
         if: steps.tools-cache.outputs.cache-hit != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pwsh -File scripts/fetch-binaries.ps1
 
       - name: Test suite (unit + integration + e2e, real binaries)

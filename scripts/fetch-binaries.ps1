@@ -49,17 +49,29 @@ if (Need 'ffmpeg') {
 
 # ---- ImageMagick portable (self-contained magick.exe) --------------------
 if (Need 'magick') {
-    # Scrape the archive index for the newest portable Q16 x64 zip.
-    $index = Invoke-WebRequest -Uri 'https://imagemagick.org/archive/binaries/' -UseBasicParsing
-    $match = ($index.Links.href | Where-Object { $_ -match 'ImageMagick-.*portable-Q16-x64\.zip$' } |
-              Sort-Object -Descending | Select-Object -First 1)
-    if (-not $match) { throw "Could not find an ImageMagick portable Q16 x64 zip in the archive index." }
-    $url = "https://imagemagick.org/archive/binaries/$match"
-    $zip = Join-Path $work 'magick.zip'
-    Save-File $url $zip
+    # The portable Windows builds are 7z assets on the GitHub release. Pick the
+    # newest non-HDRI Q16 x64 (plain Q16 is the standard; HDRI/x86/arm64 excluded).
+    $headers = @{ 'User-Agent' = 'baiji-fetch' }
+    if ($env:GITHUB_TOKEN) { $headers['Authorization'] = "Bearer $env:GITHUB_TOKEN" }
+    $release = Invoke-RestMethod -Headers $headers `
+        -Uri 'https://api.github.com/repos/ImageMagick/ImageMagick/releases/latest'
+    $asset = $release.assets | Where-Object { $_.name -match 'portable-Q16-x64\.7z$' } | Select-Object -First 1
+    if (-not $asset) { throw "No ImageMagick portable Q16 x64 asset found on the latest release." }
+
+    $archive = Join-Path $work $asset.name
+    Save-File $asset.browser_download_url $archive
     $dest = Join-Path $work 'magick'
-    Expand-Archive -Path $zip -DestinationPath $dest -Force
+    New-Item -ItemType Directory -Force -Path $dest | Out-Null
+
+    # Extract the .7z with 7-Zip (present on Windows runners; fall back to the
+    # default install path if the alias isn't on PATH).
+    $sevenZip = (Get-Command '7z' -ErrorAction SilentlyContinue)?.Source
+    if (-not $sevenZip) { $sevenZip = 'C:\Program Files\7-Zip\7z.exe' }
+    & $sevenZip x $archive "-o$dest" -y | Out-Null
+    if ($LASTEXITCODE -ne 0) { throw "7-Zip failed to extract $archive" }
+
     $mg = Get-ChildItem -Path $dest -Recurse -Filter 'magick.exe' | Select-Object -First 1
+    if (-not $mg) { throw "magick.exe not found inside $($asset.name)" }
     Copy-Item $mg.FullName (Join-Path $toolsDir 'magick.exe') -Force
     Write-Host "  -> magick.exe"
 } else { Write-Host "magick.exe present (skip; -Force to refresh)" }
