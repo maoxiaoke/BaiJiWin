@@ -51,9 +51,12 @@ pwsh -File scripts\fetch-binaries.ps1
 # Core + integration + e2e tests (run on any OS; uses real binaries)
 dotnet test tests\BaiJi.Tests\BaiJi.Tests.csproj -c Release --collect:"XPlat Code Coverage"
 
-# Build/run the WinUI app (Windows only)
-dotnet build src\BaiJi.App\BaiJi.App.csproj -c Debug -r win-x64
-dotnet run   --project src\BaiJi.App\BaiJi.App.csproj -c Debug -r win-x64
+# Build/run the WinUI app (Windows only). -p:Platform=x64 is REQUIRED — WinUI's
+# XAML compiler crashes on the default AnyCPU. Use dotnet (NOT Framework MSBuild,
+# which skips the XAML markup pass). WindowsAppSDK is pinned to 1.8 (1.6 crashes
+# XamlCompiler on current VS/.NET toolchains).
+dotnet build src\BaiJi.App\BaiJi.App.csproj -c Debug -r win-x64 -p:Platform=x64
+dotnet run   --project src\BaiJi.App\BaiJi.App.csproj -c Debug -r win-x64 -p:Platform=x64
 
 # Full smoke: tests + build + launch
 pwsh -File scripts\smoke-test.ps1

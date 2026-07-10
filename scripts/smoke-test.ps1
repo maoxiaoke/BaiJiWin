@@ -33,10 +33,10 @@ dotnet test (Join-Path $root 'tests\BaiJi.Tests\BaiJi.Tests.csproj') -c Release 
 
 # 3. Build the WinUI app.
 Write-Host "== Building the WinUI app =="
-dotnet build (Join-Path $root 'src\BaiJi.App\BaiJi.App.csproj') -c Debug -r win-x64
+dotnet build (Join-Path $root 'src\BaiJi.App\BaiJi.App.csproj') -c Debug -r win-x64 -p:Platform=x64
 
 # 4. Launch for a manual smoke check unless suppressed.
 if (-not $SkipLaunch) {
     Write-Host "== Launching BaiJi — drop an image/video, then Ctrl+V a screenshot =="
-    dotnet run --project (Join-Path $root 'src\BaiJi.App\BaiJi.App.csproj') -c Debug -r win-x64
+    dotnet run --project (Join-Path $root 'src\BaiJi.App\BaiJi.App.csproj') -c Debug -r win-x64 -p:Platform=x64
 }

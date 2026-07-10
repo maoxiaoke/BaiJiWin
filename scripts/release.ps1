@@ -37,7 +37,8 @@ if (-not (Get-Command 'vpk' -ErrorAction SilentlyContinue)) {
 
 # 2. Publish a self-contained win-x64 build.
 Remove-Item -Recurse -Force $publishDir -ErrorAction SilentlyContinue
-dotnet publish $app -c Release -r win-x64 --self-contained true `
+# -p:Platform=x64 is required — WinUI's XAML compiler crashes on AnyCPU.
+dotnet publish $app -c Release -r win-x64 -p:Platform=x64 --self-contained true `
     /p:Version=$Version -o $publishDir
 
 # 3. Pack with Velopack (produces installer + delta + RELEASES feed).
