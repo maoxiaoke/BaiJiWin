@@ -25,3 +25,4 @@
             <Frame x:Name="ContentFrame" Padding="24" />
         </NavigationView>
     </Grid>
+</Window>
