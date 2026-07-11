@@ -80,7 +80,7 @@
     <value>图片格式</value>
   </data>
   <data name="Params_FormatKeep" xml:space="preserve">
-    <value>保持原格式</value>
+    <value>原格式</value>
   </data>
   <data name="Params_RemoveAudioShort" xml:space="preserve">
     <value>移除音频</value>

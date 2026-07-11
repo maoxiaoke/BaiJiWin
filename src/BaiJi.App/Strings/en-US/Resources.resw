@@ -80,7 +80,7 @@
     <value>Image format</value>
   </data>
   <data name="Params_FormatKeep" xml:space="preserve">
-    <value>Keep original format</value>
+    <value>Original</value>
   </data>
   <data name="Params_RemoveAudioShort" xml:space="preserve">
     <value>Remove audio</value>
