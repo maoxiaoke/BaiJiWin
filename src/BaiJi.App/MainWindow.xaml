@@ -34,7 +34,8 @@
                         Spacing="10" Tapped="OnChooseFiles">
                 <FontIcon Glyph="&#xE898;" FontSize="44"
                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                <TextBlock x:Name="SlotTitle" HorizontalAlignment="Center" FontSize="15"
+                <TextBlock x:Name="SlotTitle" AutomationProperties.AutomationId="SlotTitle"
+                           HorizontalAlignment="Center" FontSize="15"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 <TextBlock x:Name="SlotSubtitle" HorizontalAlignment="Center" FontSize="12"
                            Foreground="{ThemeResource TextFillColorTertiaryBrush}" />

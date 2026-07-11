@@ -18,7 +18,8 @@ public class UiScenarios
     {
         AppSession.SeedSettings(null);
         using var s = new AppSession();
-        Assert.NotNull(s.Find("DropSlot"));
+        // Layout panels aren't surfaced to UIA; assert on the slot's text instead.
+        Assert.NotNull(s.Find("SlotTitle"));
         s.Shot("ui-01-launch");
     }
 
@@ -84,14 +85,12 @@ public class UiScenarios
         AppSession.SeedSettings(new() { ["licenseStatus"] = "Active", ["licenseKey"] = "TEST" });
         using var s = new AppSession(fileArg: SampleImage);
 
-        var card = s.Find("Card", timeoutSeconds: 20);
-        Assert.NotNull(card);
-
-        // The headline should eventually show the savings / output figure.
+        // The card (a Border) isn't a UIA element, but its headline TextBlock is;
+        // wait for it to populate with the savings / output figure.
         var headline = "";
         var gotResult = Retry.WhileFalse(() =>
         {
-            headline = s.Find("CardHeadline")?.AsLabel().Text ?? "";
+            headline = s.Find("CardHeadline", 2)?.AsLabel().Text ?? "";
             return !string.IsNullOrWhiteSpace(headline);
         }, TimeSpan.FromSeconds(40), TimeSpan.FromMilliseconds(500)).Result;
         s.Shot("ui-04-result");
@@ -104,12 +103,12 @@ public class UiScenarios
         AppSession.SeedSettings(null); // no license
         using var s = new AppSession(fileArg: SampleImage);
 
-        // A ContentDialog should appear over the main window.
-        var dialog = Retry.WhileNull(
-            () => s.MainWindow.FindFirstDescendant(cf => cf.ByControlType(ControlType.Window).Or(cf.ByClassName("Popup")))
-                  ?? s.MainWindow.ModalWindows.FirstOrDefault(),
-            TimeSpan.FromSeconds(10)).Result;
+        // The license ContentDialog's primary button ("Manage license") is a
+        // reliable UIA anchor for "the dialog is up".
+        var dialogButton = Retry.WhileNull(
+            () => s.MainWindow.FindFirstDescendant(cf => cf.ByName("Manage license")),
+            TimeSpan.FromSeconds(12), TimeSpan.FromMilliseconds(300)).Result;
         s.Shot("ui-05-license-required");
-        Assert.NotNull(dialog);
+        Assert.NotNull(dialogButton);
     }
 }
