@@ -6,6 +6,7 @@ using FlaUI.Core.Capturing;
 using FlaUI.Core.Definitions;
 using FlaUI.Core.Tools;
 using FlaUI.UIA3;
+using Xunit;
 
 namespace BaiJi.UITests;
 
