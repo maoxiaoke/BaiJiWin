@@ -459,7 +459,11 @@ public sealed class MediaQueue
         }
     }
 
-    private void RaiseChanged() => Changed?.Invoke();
+    // Marshal notifications through the host's dispatcher so the UI's Changed
+    // handler always runs on the UI thread — ProcessAsync resumes on a threadpool
+    // thread after awaiting a worker, and touching UI from there faults the drain.
+    // In tests `_post` runs inline, so behaviour is unchanged there.
+    private void RaiseChanged() => _post(() => Changed?.Invoke());
 
     private static void TryDelete(string path)
     {
