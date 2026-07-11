@@ -9,16 +9,20 @@
                         PaneDisplayMode="Left" OpenPaneLength="180"
                         SelectionChanged="OnSelectionChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="GeneralItem" Tag="general">
+                <NavigationViewItem x:Name="GeneralItem" Tag="general"
+                                    AutomationProperties.AutomationId="NavGeneral">
                     <NavigationViewItem.Icon><FontIcon Glyph="&#xE713;" /></NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Name="LicenseItem" Tag="license">
+                <NavigationViewItem x:Name="LicenseItem" Tag="license"
+                                    AutomationProperties.AutomationId="NavLicense">
                     <NavigationViewItem.Icon><FontIcon Glyph="&#xE192;" /></NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Name="UpdatesItem" Tag="updates">
+                <NavigationViewItem x:Name="UpdatesItem" Tag="updates"
+                                    AutomationProperties.AutomationId="NavUpdates">
                     <NavigationViewItem.Icon><FontIcon Glyph="&#xE895;" /></NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem x:Name="InfoItem" Tag="info">
+                <NavigationViewItem x:Name="InfoItem" Tag="info"
+                                    AutomationProperties.AutomationId="NavInfo">
                     <NavigationViewItem.Icon><FontIcon Glyph="&#xE946;" /></NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

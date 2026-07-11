@@ -118,6 +118,20 @@ jobs:
           name: screenshot
           path: screenshot.png
 
+      - name: UI e2e tests (FlaUI drives the real app)
+        env:
+          BAIJI_APP_EXE: ${{ github.workspace }}\artifacts\app\BaiJi.exe
+          BAIJI_SHOT_DIR: ${{ github.workspace }}\ui-shots
+          BAIJI_SAMPLE_IMAGE: ${{ github.workspace }}\TestAssets\images\sample.jpg
+        run: dotnet test tests/BaiJi.UITests/BaiJi.UITests.csproj -c Release -p:Platform=x64
+
+      - name: Upload UI screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-shots
+          path: ui-shots/**
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4

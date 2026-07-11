@@ -19,6 +19,10 @@ public static class Program
         // Handles Velopack lifecycle events; returns immediately in normal runs.
         UpdateService.RunStartupHook();
 
+        // Any file paths passed on the command line (Open-with / drag-onto-exe /
+        // UI e2e tests) are enqueued once the window is up.
+        App.StartupFileArgs = args.Where(a => File.Exists(a)).ToArray();
+
         WinRT.ComWrappersSupport.InitializeComWrappers();
         Application.Start(p =>
         {

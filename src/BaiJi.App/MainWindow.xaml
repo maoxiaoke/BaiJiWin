@@ -19,6 +19,7 @@
         <!-- Header row inside the client area (normal title bar is used, so no
              collision with the system caption buttons). -->
         <Button x:Name="SettingsButton" Grid.Row="0" Click="OnOpenSettings"
+                AutomationProperties.AutomationId="SettingsButton"
                 HorizontalAlignment="Right" Margin="0,10,12,0" Padding="8"
                 Background="Transparent" BorderThickness="0"
                 ToolTipService.ToolTip="Settings">
@@ -28,7 +29,8 @@
         <!-- Stage: drop slot OR the result card -->
         <Grid Grid.Row="1" Padding="24,0,24,8">
             <!-- Empty stage -->
-            <StackPanel x:Name="DropSlot" VerticalAlignment="Center" HorizontalAlignment="Center"
+            <StackPanel x:Name="DropSlot" AutomationProperties.AutomationId="DropSlot"
+                        VerticalAlignment="Center" HorizontalAlignment="Center"
                         Spacing="10" Tapped="OnChooseFiles">
                 <FontIcon Glyph="&#xE898;" FontSize="44"
                           Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
@@ -39,15 +41,15 @@
             </StackPanel>
 
             <!-- Result card -->
-            <Border x:Name="Card" Visibility="Collapsed"
+            <Border x:Name="Card" AutomationProperties.AutomationId="Card" Visibility="Collapsed"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                     BorderThickness="1" CornerRadius="10" Padding="20">
                 <StackPanel Spacing="12" VerticalAlignment="Center">
                     <controls:ProgressRing x:Name="CardProgress" Width="52" Height="52"
                                            HorizontalAlignment="Center" IsActive="False" Visibility="Collapsed" />
-                    <TextBlock x:Name="CardHeadline" HorizontalAlignment="Center"
-                               FontSize="26" FontWeight="SemiBold" />
+                    <TextBlock x:Name="CardHeadline" AutomationProperties.AutomationId="CardHeadline"
+                               HorizontalAlignment="Center" FontSize="26" FontWeight="SemiBold" />
                     <TextBlock x:Name="CardDetail" HorizontalAlignment="Center" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                TextWrapping="Wrap" TextAlignment="Center" />
@@ -79,11 +81,11 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ComboBox x:Name="QualityCombo" Grid.Column="0" HorizontalAlignment="Stretch"
-                      SelectionChanged="OnQuickChanged" />
+                      AutomationProperties.AutomationId="QualityCombo" SelectionChanged="OnQuickChanged" />
             <ComboBox x:Name="TargetCombo" Grid.Column="1" HorizontalAlignment="Stretch"
-                      SelectionChanged="OnQuickChanged" />
+                      AutomationProperties.AutomationId="TargetCombo" SelectionChanged="OnQuickChanged" />
             <ComboBox x:Name="FormatCombo" Grid.Column="2" HorizontalAlignment="Stretch"
-                      SelectionChanged="OnQuickChanged" />
+                      AutomationProperties.AutomationId="FormatCombo" SelectionChanged="OnQuickChanged" />
         </Grid>
 
         <!-- Toast -->

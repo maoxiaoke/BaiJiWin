@@ -8,6 +8,9 @@ public partial class App : Application
 {
     public static Window? MainWindow { get; private set; }
 
+    /// <summary>File paths passed on the command line, enqueued after launch.</summary>
+    public static string[] StartupFileArgs { get; set; } = Array.Empty<string>();
+
     public App()
     {
         InitializeComponent();
@@ -35,6 +38,10 @@ public partial class App : Application
     {
         MainWindow = new MainWindow();
         MainWindow.Activate();
+
+        // Enqueue any files passed on the command line (Open-with / e2e tests).
+        if (StartupFileArgs.Length > 0)
+            AppServices.Instance.Queue.Enqueue(StartupFileArgs);
 
         // Kick off a background update check if the user hasn't opted out.
         if (AppServices.Instance.Settings.GetString("autoCheckUpdates") != bool.FalseString)
