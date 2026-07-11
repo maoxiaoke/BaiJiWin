@@ -85,16 +85,15 @@ public class UiScenarios
         AppSession.SeedSettings(new() { ["licenseStatus"] = "Active", ["licenseKey"] = "TEST" });
         using var s = new AppSession(fileArg: SampleImage);
 
-        // The card (a Border) isn't a UIA element, but its headline TextBlock is;
-        // wait for it to populate with the savings / output figure.
-        var headline = "";
-        var gotResult = Retry.WhileFalse(() =>
-        {
-            headline = s.Find("CardHeadline", 2)?.AsLabel().Text ?? "";
-            return !string.IsNullOrWhiteSpace(headline);
-        }, TimeSpan.FromSeconds(40), TimeSpan.FromMilliseconds(500)).Result;
+        // Wait for the DONE state: the "Save to…" button is only shown once a
+        // result exists (it's Collapsed while queued/processing).
+        var done = Retry.WhileNull(
+            () => s.Find("SaveButton", 2),
+            TimeSpan.FromSeconds(40), TimeSpan.FromMilliseconds(500)).Result;
+        var headline = s.Find("CardHeadline", 2)?.AsLabel().Text ?? "";
         s.Shot("ui-04-result");
-        Assert.True(gotResult, "result card headline never populated");
+        Assert.NotNull(done);
+        Assert.False(string.IsNullOrWhiteSpace(headline), "result card headline never populated");
     }
 
     [Fact]

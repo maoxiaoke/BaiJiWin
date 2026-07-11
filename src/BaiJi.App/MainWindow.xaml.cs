@@ -37,6 +37,18 @@ public sealed partial class MainWindow : Window
         paste.Invoked += async (_, e) => { e.Handled = true; await _vm.PasteAsync(); };
         RootGrid.KeyboardAccelerators.Add(paste);
 
+        // Enqueue command-line files only once the UI is loaded (XamlRoot ready),
+        // so a license dialog can safely appear.
+        RootGrid.Loaded += (_, _) =>
+        {
+            if (App.StartupFileArgs.Length > 0)
+            {
+                var files = App.StartupFileArgs;
+                App.StartupFileArgs = Array.Empty<string>();
+                _vm.Enqueue(files);
+            }
+        };
+
         Render();
     }
 
@@ -261,18 +273,35 @@ public sealed partial class MainWindow : Window
         Toast.IsOpen = true;
     }
 
+    private bool _dialogOpen;
+
     private async void ShowLicenseRequired()
     {
-        var dialog = new ContentDialog
+        // Guard: XamlRoot must be ready, and only one dialog at a time. Never let
+        // a dialog failure crash the app (it once did, during startup).
+        if (_dialogOpen || RootGrid.XamlRoot is null) return;
+        _dialogOpen = true;
+        try
         {
-            Title = Loc.Get("License_RequiredTitle"),
-            Content = Loc.Get("License_RequiredMessage"),
-            PrimaryButtonText = Loc.Get("License_Manage"),
-            CloseButtonText = Loc.Get("Common_Cancel"),
-            XamlRoot = RootGrid.XamlRoot,
-        };
-        if (await dialog.ShowAsync() == ContentDialogResult.Primary)
-            new SettingsWindow(selectTab: 1).Activate();
+            var dialog = new ContentDialog
+            {
+                Title = Loc.Get("License_RequiredTitle"),
+                Content = Loc.Get("License_RequiredMessage"),
+                PrimaryButtonText = Loc.Get("License_Manage"),
+                CloseButtonText = Loc.Get("Common_Cancel"),
+                XamlRoot = RootGrid.XamlRoot,
+            };
+            if (await dialog.ShowAsync() == ContentDialogResult.Primary)
+                new SettingsWindow(selectTab: 1).Activate();
+        }
+        catch (Exception ex)
+        {
+            CrashLog.Write(ex, "LicenseDialog");
+        }
+        finally
+        {
+            _dialogOpen = false;
+        }
     }
 
     private static string Human(long bytes)

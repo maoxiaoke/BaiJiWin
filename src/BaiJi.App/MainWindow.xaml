@@ -61,7 +61,8 @@
                                 <TextBlock x:Name="CopyLabel" />
                             </StackPanel>
                         </Button>
-                        <Button x:Name="SaveButton" Click="OnSaveTo" Visibility="Collapsed" />
+                        <Button x:Name="SaveButton" AutomationProperties.AutomationId="SaveButton"
+                                Click="OnSaveTo" Visibility="Collapsed" />
                         <Button x:Name="ReprocessButton" Click="OnReprocess" Visibility="Collapsed"
                                 Style="{ThemeResource AccentButtonStyle}" />
                         <Button x:Name="RemoveButton" Click="OnRemove"

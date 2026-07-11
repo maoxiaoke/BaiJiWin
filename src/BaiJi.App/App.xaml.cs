@@ -38,10 +38,8 @@ public partial class App : Application
     {
         MainWindow = new MainWindow();
         MainWindow.Activate();
-
-        // Enqueue any files passed on the command line (Open-with / e2e tests).
-        if (StartupFileArgs.Length > 0)
-            AppServices.Instance.Queue.Enqueue(StartupFileArgs);
+        // Startup files are enqueued by MainWindow once its content is loaded
+        // (XamlRoot ready) — enqueuing here can surface a dialog too early and crash.
 
         // Kick off a background update check if the user hasn't opted out.
         if (AppServices.Instance.Settings.GetString("autoCheckUpdates") != bool.FalseString)
