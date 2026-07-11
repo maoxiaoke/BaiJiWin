@@ -16,24 +16,23 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Title bar strip with a settings (gear) button -->
-        <Grid x:Name="AppTitleBar" Height="40" Row="0" Padding="12,0">
-            <TextBlock x:Name="TitleText" Text="BaiJi" VerticalAlignment="Center"
-                       FontWeight="SemiBold" />
-            <Button x:Name="SettingsButton" HorizontalAlignment="Right" VerticalAlignment="Center"
-                    Click="OnOpenSettings" Background="Transparent" BorderThickness="0"
-                    ToolTipService.ToolTip="Settings">
-                <FontIcon Glyph="&#xE713;" FontSize="16" />
-            </Button>
-        </Grid>
+        <!-- Header row inside the client area (normal title bar is used, so no
+             collision with the system caption buttons). -->
+        <Button x:Name="SettingsButton" Grid.Row="0" Click="OnOpenSettings"
+                HorizontalAlignment="Right" Margin="0,10,12,0" Padding="8"
+                Background="Transparent" BorderThickness="0"
+                ToolTipService.ToolTip="Settings">
+            <FontIcon Glyph="&#xE713;" FontSize="16" />
+        </Button>
 
         <!-- Stage: drop slot OR the result card -->
-        <Grid Row="1" Padding="16,4">
+        <Grid Grid.Row="1" Padding="24,0,24,8">
             <!-- Empty stage -->
             <StackPanel x:Name="DropSlot" VerticalAlignment="Center" HorizontalAlignment="Center"
-                        Spacing="8" Tapped="OnChooseFiles">
-                <FontIcon Glyph="&#xE898;" FontSize="40" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                <TextBlock x:Name="SlotTitle" HorizontalAlignment="Center"
+                        Spacing="10" Tapped="OnChooseFiles">
+                <FontIcon Glyph="&#xE898;" FontSize="44"
+                          Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                <TextBlock x:Name="SlotTitle" HorizontalAlignment="Center" FontSize="15"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 <TextBlock x:Name="SlotSubtitle" HorizontalAlignment="Center" FontSize="12"
                            Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
@@ -43,12 +42,12 @@
             <Border x:Name="Card" Visibility="Collapsed"
                     Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1" CornerRadius="10" Padding="16">
-                <StackPanel Spacing="10" VerticalAlignment="Center">
-                    <controls:ProgressRing x:Name="CardProgress" Width="48" Height="48"
+                    BorderThickness="1" CornerRadius="10" Padding="20">
+                <StackPanel Spacing="12" VerticalAlignment="Center">
+                    <controls:ProgressRing x:Name="CardProgress" Width="52" Height="52"
                                            HorizontalAlignment="Center" IsActive="False" Visibility="Collapsed" />
                     <TextBlock x:Name="CardHeadline" HorizontalAlignment="Center"
-                               FontSize="20" FontWeight="SemiBold" />
+                               FontSize="26" FontWeight="SemiBold" />
                     <TextBlock x:Name="CardDetail" HorizontalAlignment="Center" FontSize="12"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                TextWrapping="Wrap" TextAlignment="Center" />
@@ -60,8 +59,10 @@
                             </StackPanel>
                         </Button>
                         <Button x:Name="SaveButton" Click="OnSaveTo" Visibility="Collapsed" />
-                        <Button x:Name="ReprocessButton" Click="OnReprocess" Visibility="Collapsed" />
-                        <Button x:Name="RemoveButton" Click="OnRemove">
+                        <Button x:Name="ReprocessButton" Click="OnReprocess" Visibility="Collapsed"
+                                Style="{ThemeResource AccentButtonStyle}" />
+                        <Button x:Name="RemoveButton" Click="OnRemove"
+                                ToolTipService.ToolTip="Remove">
                             <FontIcon Glyph="&#xE711;" FontSize="14" />
                         </Button>
                     </StackPanel>
@@ -69,8 +70,9 @@
             </Border>
         </Grid>
 
-        <!-- Quick-settings bar -->
-        <Grid Row="2" Padding="12,8" ColumnSpacing="8" Background="{ThemeResource LayerFillColorDefaultBrush}">
+        <!-- Quick-settings bar (labeled so nothing is truncated) -->
+        <Grid Grid.Row="2" Padding="16,12,16,16" ColumnSpacing="10"
+              Background="{ThemeResource LayerFillColorDefaultBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
@@ -86,6 +88,6 @@
 
         <!-- Toast -->
         <InfoBar x:Name="Toast" Grid.RowSpan="3" IsOpen="False" IsClosable="True"
-                 VerticalAlignment="Bottom" Margin="12,0,12,56" Severity="Success" />
+                 VerticalAlignment="Bottom" Margin="12,0,12,64" Severity="Success" />
     </Grid>
 </Window>

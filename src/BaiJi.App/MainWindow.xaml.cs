@@ -42,20 +42,24 @@ public sealed partial class MainWindow : Window
 
     private void ConfigureWindow()
     {
-        ExtendsContentIntoTitleBar = true;
-        SetTitleBar(AppTitleBar);
-
+        Title = "BaiJi";
         var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-        var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
-        var appWindow = AppWindow.GetFromWindowId(windowId);
-        appWindow.Resize(new Windows.Graphics.SizeInt32(340, 460));
+        var appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hwnd));
+
+        // The layout is designed in DIPs; AppWindow.Resize takes physical pixels,
+        // so scale by the monitor DPI or the window is crushed on HiDPI displays.
+        var scale = GetDpiForWindow(hwnd) / 96.0;
+        appWindow.Resize(new Windows.Graphics.SizeInt32((int)(400 * scale), (int)(500 * scale)));
+
         if (appWindow.Presenter is OverlappedPresenter presenter)
         {
             presenter.IsResizable = false;
             presenter.IsMaximizable = false;
         }
-        Title = "BaiJi";
     }
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern uint GetDpiForWindow(IntPtr hwnd);
 
     private void LocalizeStatic()
     {
@@ -69,6 +73,10 @@ public sealed partial class MainWindow : Window
 
     private void PopulateQuickControls()
     {
+        QualityCombo.Header = Loc.Get("Params_Quality");
+        TargetCombo.Header = Loc.Get("Target_MenuTitle");
+        FormatCombo.Header = Loc.Get("Params_ImageFormat");
+
         QualityCombo.ItemsSource = _quick.Presets.Select(QuickSettingsViewModel.PresetLabel).ToList();
         QualityCombo.SelectedIndex = _quick.Presets.ToList().IndexOf(_quick.Preset);
 
