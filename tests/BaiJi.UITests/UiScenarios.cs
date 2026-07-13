@@ -13,6 +13,10 @@ public class UiScenarios
         Environment.GetEnvironmentVariable("BAIJI_SAMPLE_IMAGE")
         ?? throw new InvalidOperationException("BAIJI_SAMPLE_IMAGE not set");
 
+    private static string SamplePng =>
+        Environment.GetEnvironmentVariable("BAIJI_SAMPLE_PNG")
+        ?? throw new InvalidOperationException("BAIJI_SAMPLE_PNG not set");
+
     [Fact]
     public void Launch_shows_the_drop_slot()
     {
@@ -94,6 +98,23 @@ public class UiScenarios
         s.Shot("ui-04-result");
         Assert.NotNull(done);
         Assert.False(string.IsNullOrWhiteSpace(headline), "result card headline never populated");
+    }
+
+    [Fact]
+    public void Compress_png_via_pngquant_shows_a_result_card()
+    {
+        // PNG goes through pngquant (not magick) — exercises the pngquant.exe +
+        // bundled VC++ runtime path that a jpg would skip.
+        AppSession.SeedSettings(new() { ["licenseStatus"] = "Active", ["licenseKey"] = "TEST" });
+        using var s = new AppSession(fileArg: SamplePng);
+
+        var done = Retry.WhileNull(
+            () => s.Find("SaveButton", 2),
+            TimeSpan.FromSeconds(40), TimeSpan.FromMilliseconds(500)).Result;
+        var headline = s.Find("CardHeadline", 2)?.AsLabel().Text ?? "";
+        s.Shot("ui-06-png-result");
+        Assert.NotNull(done);
+        Assert.False(string.IsNullOrWhiteSpace(headline), "png result card headline never populated");
     }
 
     [Fact]

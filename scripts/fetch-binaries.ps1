@@ -86,6 +86,19 @@ if (Need 'pngquant') {
     Write-Host "  -> pngquant.exe"
 } else { Write-Host "pngquant.exe present (skip; -Force to refresh)" }
 
+# ---- VC++ runtime for pngquant (dynamically linked against MSVC) ----------
+# The pngquant.org build needs VCRUNTIME140* / MSVCP140. Ship them app-local so
+# machines without the VC++ redistributable don't fail with a missing-DLL error.
+# They load from pngquant.exe's own directory (Tools\), so no system install.
+foreach ($dll in 'VCRUNTIME140.dll', 'VCRUNTIME140_1.dll', 'MSVCP140.dll') {
+    $dest = Join-Path $toolsDir $dll
+    if ($Force -or -not (Test-Path $dest)) {
+        $src = Join-Path $env:SystemRoot "System32\$dll"
+        if (Test-Path $src) { Copy-Item $src $dest -Force; Write-Host "  -> $dll" }
+        else { Write-Warning "Could not find $dll in System32 to bundle." }
+    }
+}
+
 Remove-Item -Recurse -Force $work
 Write-Host "`nDone. Tools in $toolsDir :"
 Get-ChildItem $toolsDir | Format-Table Name, Length

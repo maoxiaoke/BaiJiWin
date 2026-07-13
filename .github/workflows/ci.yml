@@ -69,12 +69,17 @@ jobs:
           Get-ChildItem -Recurse src/BaiJi.App/obj -Include input.json,output.json -ErrorAction SilentlyContinue |
             ForEach-Object { "`n===== $($_.FullName) ====="; Get-Content $_.FullName -Raw }
 
-      - name: List publish output (resources.pri / XBF)
+      - name: List publish output + verify bundled tools/runtime
         shell: pwsh
         run: |
           Get-ChildItem artifacts/app -Filter *.pri | Format-Table Name, Length
-          Get-ChildItem artifacts/app -Filter *.xbf -ErrorAction SilentlyContinue | Format-Table Name, Length
-          Write-Host "resources.pri present: $(Test-Path artifacts/app/resources.pri)"
+          Get-ChildItem artifacts/app/Tools | Format-Table Name, Length
+          # pngquant is dynamically linked; its VC++ runtime must ship alongside
+          # it or clean machines fail with "VCRUNTIME140.dll not found".
+          foreach ($dll in 'VCRUNTIME140.dll','VCRUNTIME140_1.dll','MSVCP140.dll') {
+            if (-not (Test-Path "artifacts/app/Tools/$dll")) { throw "Missing bundled $dll" }
+          }
+          Write-Host "VC++ runtime DLLs bundled OK"
 
       - name: Launch smoke test (app must start without crashing)
         # Catches runtime startup failures the compiler can't — e.g. a XAML
@@ -123,6 +128,7 @@ jobs:
           BAIJI_APP_EXE: ${{ github.workspace }}\artifacts\app\BaiJi.exe
           BAIJI_SHOT_DIR: ${{ github.workspace }}\ui-shots
           BAIJI_SAMPLE_IMAGE: ${{ github.workspace }}\TestAssets\images\sample.jpg
+          BAIJI_SAMPLE_PNG: ${{ github.workspace }}\TestAssets\images\sample.png
         run: dotnet test tests/BaiJi.UITests/BaiJi.UITests.csproj -c Release -p:Platform=x64
 
       - name: Upload UI screenshots
