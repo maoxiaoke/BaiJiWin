@@ -14,7 +14,12 @@ public sealed partial class SettingsWindow : Microsoft.UI.Xaml.Window
 
         var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
         var appWindow = AppWindow.GetFromWindowId(Win32Interop.GetWindowIdFromWindow(hwnd));
-        appWindow.Resize(new Windows.Graphics.SizeInt32(640, 480));
+        // Size in DIPs scaled to the monitor DPI (Resize is in physical pixels),
+        // or the content is clipped on HiDPI displays.
+        var scale = GetDpiForWindow(hwnd) / 96.0;
+        appWindow.Resize(new Windows.Graphics.SizeInt32((int)(680 * scale), (int)(540 * scale)));
+        if (appWindow.Presenter is Microsoft.UI.Windowing.OverlappedPresenter p)
+            p.IsMaximizable = true; // resizable, so users can enlarge if needed
 
         GeneralItem.Content = Loc.Get("Settings_General");
         LicenseItem.Content = Loc.Get("Settings_License");
@@ -29,6 +34,9 @@ public sealed partial class SettingsWindow : Microsoft.UI.Xaml.Window
             _ => GeneralItem,
         };
     }
+
+    [System.Runtime.InteropServices.DllImport("user32.dll")]
+    private static extern uint GetDpiForWindow(IntPtr hwnd);
 
     private void OnSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
